@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const router = useRouter()
   const [inputVal, setInputVal] = useState("");
-  const {push} = useRouter()
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    router.push(`/movies/${inputVal}`)
+    const searchTerm = inputVal.trim() === "" ? "spiderman" : inputVal;
+    router.push(`/movies/${searchTerm}`)
   };
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="border rounded-xl p-4 shadow-sm">
+      <div className="border rounded-xl p-7">
         <h1 className="font-bold text-3xl mb-3 text-center">Find a Movie</h1>
           <form onSubmit={handleSubmit}>
             <input 
@@ -22,7 +22,7 @@ export default function Home() {
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}/>
             <div className="flex justify-center">
-              <button type="submit" className=" bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded">Find Movie</button>
+              <button type="submit" className=" bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded-md">Search</button>
             </div>
           </form>
       </div>
