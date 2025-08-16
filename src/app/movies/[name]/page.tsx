@@ -15,12 +15,13 @@ interface Film {
 }
 
 export default function MoviesPage() {
+    const { name } = useParams();
     const [films, setFilms] = useState<Film[]>([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         async function fetchFilms() {
                 try {
-                    const res = await fetch(`https://imdb.iamidiotareyoutoo.com/search?q=spiderman`);
+                    const res = await fetch(`https://imdb.iamidiotareyoutoo.com/search?q=${name}`);
                     const data = await res.json();
                     if (!res.ok){
                         throw new Error("Failed to fetch data");
