@@ -16,15 +16,19 @@ interface Film {
 }
 
 export default function MoviesPage() {
-    const movieName = useAppSelector((state) => state.movieName.value)
-    console.log(movieName)
+    const { name: urlName } = useParams();
+    const movieNameRedux = useAppSelector((state) => state.movieName.value);
+    const movieName = movieNameRedux || (typeof urlName === "string" ? decodeURIComponent(urlName) : "");
     // const { name } = useParams();
     // const decodedName = typeof name === "string" ? decodeURIComponent(name) : "";
     const [films, setFilms] = useState<Film[]>([]);
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        if (!movieName) return;
+        if (!movieName) {
+            setLoading(false)
+            return;
+        }
         async function fetchFilms() {
                 try {
                     const res = await fetch(`https://imdb.iamidiotareyoutoo.com/search?q=${movieName}`);

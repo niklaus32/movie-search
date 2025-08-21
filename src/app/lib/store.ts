@@ -13,7 +13,6 @@
 // // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 // export type AppDispatch = typeof store.dispatch
 
-
 import { configureStore } from '@reduxjs/toolkit'
 import movieNameReducer from './features/movieNameSlice';
 
