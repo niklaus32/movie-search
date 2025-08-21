@@ -12,6 +12,7 @@ interface Film {
 
 export default function Movies() {
     const [films, setFilms] = useState<Film[]>([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         async function fetchFilms() {
             try {
@@ -24,10 +25,23 @@ export default function Movies() {
                 setFilms(films);
             } catch (error) {
                 console.error("Error fetching films:", error);
+                setFilms([]);
+            } finally {
+                setLoading(false);
             }
         }
         fetchFilms();
     }, []);
+
+    if (loading) {
+        return (
+            <main className="flex items-center justify-center min-h-screen">
+                <div className="flex flex-col items-center">
+                    <h1 className="text-2xl font-semibold">Loading...</h1>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -43,7 +57,7 @@ export default function Movies() {
                         <div key={film.id} className="border shadow-lg rounded-xl p-5 hover:shadow-xl transition duration-300 flex flex-col items-center">
                             <img src={film.primaryImage?.url || "/default-poster.png"} alt={film.originalTitle} className="w-64 h-96 mb-5 object-cover rounded-lg"/>
                             <h2 className="text-xl font-semibold mb-2 text-center">{film.originalTitle}</h2>
-                            <p className="text-gray-500 mb-1">Year: {film.type}</p>
+                            <p className="text-gray-500 mb-1">Type: {film.type}</p>
                             <a href={`https://www.imdb.com/title/${film.id}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">IMDB Link</a>
                         </div>
                     ))

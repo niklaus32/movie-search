@@ -11,9 +11,13 @@ export default function Home() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const searchTerm = inputVal.trim() === "" ?  "spiderman" : inputVal;
-    dispatch(setMovieName(searchTerm)) 
-    router.push(`/movies/${searchTerm}`)
+    if (inputVal == "") {
+      router.push('/movies')
+    } else {
+      const searchTerm = inputVal
+      dispatch(setMovieName(searchTerm)) 
+      router.push(`/movies/${searchTerm}`)
+    }
   };
   return (
     <div className="flex items-center justify-center min-h-screen">
