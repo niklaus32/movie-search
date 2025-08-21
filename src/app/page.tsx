@@ -20,18 +20,18 @@ export default function Home() {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="border rounded-xl p-7">
-        <h1 className="font-bold text-3xl mb-3 text-center">Find a Movie</h1>
+    <div className="flex items-center justify-center min-h-screen bg-black">
+      <div className="border bg-[#1a1a1a] rounded-xl p-9">
+        <h1 className="font-bold text-3xl mb-3 text-center text-[#efefef]">Find a Movie</h1>
           <form onSubmit={handleSubmit}>
             <input 
             type="text" 
             placeholder="Search movies..." 
-            className="border p-2 rounded-md mb-6 w-full max-w-md"
+            className="border p-2 rounded-md mb-6 w-full max-w-md bg-white"
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}/>
             <div className="flex justify-center">
-              <button type="submit" className=" bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded-md">Search</button>
+              <button type="submit" className=" bg-green-700 hover:bg-green-800 text-neutral-300 font-bold py-2 px-3 rounded-md">Search</button>
             </div>
           </form>
       </div>
