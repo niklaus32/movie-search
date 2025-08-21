@@ -1,8 +1,8 @@
 "use client";
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../lib/hooks"
 
 interface Film {
     "#TITLE": string;
@@ -16,16 +16,18 @@ interface Film {
 }
 
 export default function MoviesPage() {
-    const { name } = useParams();
-    const decodedName = typeof name === "string" ? decodeURIComponent(name) : "";
+    const movieName = useAppSelector((state) => state.movieName.value)
+    console.log(movieName)
+    // const { name } = useParams();
+    // const decodedName = typeof name === "string" ? decodeURIComponent(name) : "";
     const [films, setFilms] = useState<Film[]>([]);
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        if (!decodedName) return;
+        if (!movieName) return;
         async function fetchFilms() {
                 try {
-                    const res = await fetch(`https://imdb.iamidiotareyoutoo.com/search?q=${decodedName}`);
+                    const res = await fetch(`https://imdb.iamidiotareyoutoo.com/search?q=${movieName}`);
                     const data = await res.json();
                     if (!res.ok){
                         throw new Error("Failed to fetch data");
@@ -40,7 +42,7 @@ export default function MoviesPage() {
                 }
             }
         fetchFilms();
-    }, [decodedName]);
+    }, [movieName]);
 
     if (loading) {
         return (
@@ -55,7 +57,7 @@ export default function MoviesPage() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <div>
-                <h1 className="text-3xl font-semibold mb-6">Search: &quot;{decodedName}&quot;</h1>
+                <h1 className="text-3xl font-semibold mb-6">Search: &quot;{movieName}&quot;</h1>
                 <Link href="/" className="flex justify-center hover:underline p-3">Go back</Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

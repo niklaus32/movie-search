@@ -1,13 +1,18 @@
-"use client";
-import { useState, FormEvent } from "react";
-import { useRouter } from 'next/navigation';
+"use client"
+import { useState, FormEvent } from "react"
+import { useRouter } from 'next/navigation'
+import { useAppDispatch } from "./lib/hooks"
+import { setMovieName } from "./lib/features/movieNameSlice"
 
 export default function Home() {
+  const dispatch = useAppDispatch()
   const router = useRouter()
   const [inputVal, setInputVal] = useState("");
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const searchTerm = inputVal.trim() === "" ? "spiderman" : inputVal;
+    const searchTerm = inputVal.trim() === "" ?  "spiderman" : inputVal;
+    dispatch(setMovieName(searchTerm)) 
     router.push(`/movies/${searchTerm}`)
   };
   return (
